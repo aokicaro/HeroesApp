@@ -7,6 +7,10 @@
         <tr *ngFor="let hero of heroes">
             <td>{{hero.id}}</td>
             <td>{{hero.name}}</td>
+            <td>
+                <span (click)="seeDetail(hero)">Detail</span>                
+                <app-heroes-details *ngIf="selectedHero && selectedHero === hero" [hero]="selectedHero"></app-heroes-details>
+            </td>
         </tr>
     </tbody>
 </table>

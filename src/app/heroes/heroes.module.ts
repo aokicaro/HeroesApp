@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
 import { HeroesService } from './services/heroes.service';
+import { HeroesDetailsComponent } from './heroes-details/heroes-details.component';
 
 
 @NgModule({
-    declarations: [HeroesListComponent],
+    declarations: [HeroesListComponent, HeroesDetailsComponent],
     imports: [
         CommonModule,
         HttpClientModule

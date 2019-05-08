@@ -10,35 +10,37 @@ import { Hero } from '../interfaces/iHero';
 })
 export class HeroesListComponent implements OnInit {
 
-  public heroes: Hero[];
-  public hero: Hero
+  private heroes: Hero[];
+
+  private selectedHero: Hero;
 
   constructor(
     private heroesService: HeroesService
   ) { }
 
+
   ngOnInit() {
     this.getAllHeroes();
-    this.getHeroById();
+    // this.getHeroById();
   }
-
 
   getAllHeroes(){
     this.heroesService.getAllHeroes().subscribe(
-      (res) => {
-        this.heroes = res
-        console.log(res);    
-      }
+      (res) => this.heroes = res
     )
   }
 
-  getHeroById(){
-    this.heroesService.getHeroById(1).subscribe(
-      (res) => {
-        this.hero = res;
-        console.log(this.hero);    
-      }
-    )
+  seeDetail(hero: Hero){
+    this.selectedHero = hero;
   }
+
+  // getHeroById(){
+  //   this.heroesService.getHeroById(1).subscribe(
+  //     (res) => {
+  //       this.hero = res;
+  //       console.log(this.hero);    
+  //     }
+  //   )
+  // }
 
 }
