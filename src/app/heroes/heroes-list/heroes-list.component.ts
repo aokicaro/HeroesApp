@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { switchMap } from 'rxjs/operators';
 
 import {HeroesService} from '../services/heroes.service'
 import { Hero } from '../interfaces/iHero';
@@ -10,7 +11,9 @@ import { Hero } from '../interfaces/iHero';
 })
 export class HeroesListComponent implements OnInit {
 
-  private heroes: Hero[];
+  private hero: Hero
+  private heroes: Hero[] = [];
+  private countHeroes: number;
 
   private selectedHero: Hero;
 
@@ -20,27 +23,45 @@ export class HeroesListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getAllHeroes();
-    // this.getHeroById();
+    this.getHeroes(1);
   }
 
-  getAllHeroes(){
-    this.heroesService.getAllHeroes().subscribe(
-      (res) => this.heroes = res
-    )
+  getHeroes(page:number){
+    // Api doenst have a mode to get all heroes so i will make 10 requisitions
+    let index = 1
+    let until = (page * 10) + 1
+    let localHero; 
+
+    page !== 1 ? index = page + 9 : false;
+   //  TODO :  Separete function --
+    for (index; index < until; index++) {
+      localHero = localStorage.getItem(index.toString())
+      if(localHero === null ){
+        this.heroesService.getHeroById(index).subscribe(
+          (res) => {
+            this.heroes.push(res);
+          },
+          (err) => {
+            console.log(err);
+            // Implement error component
+          },
+          () => {
+            this.heroes.forEach(
+              (hero) => {
+                localStorage.setItem(`${hero.id}`, JSON.stringify(hero));
+              }
+            )
+          }
+        ); 
+      } else {        
+        let heroStored:Hero = JSON.parse(localHero)
+        this.heroes.push(heroStored);       
+      }
+    }
   }
 
   seeDetail(hero: Hero){
-    this.selectedHero = hero;
+    this.selectedHero !== hero ? this.selectedHero = hero : this.selectedHero = null 
   }
-
-  // getHeroById(){
-  //   this.heroesService.getHeroById(1).subscribe(
-  //     (res) => {
-  //       this.hero = res;
-  //       console.log(this.hero);    
-  //     }
-  //   )
-  // }
 
 }
