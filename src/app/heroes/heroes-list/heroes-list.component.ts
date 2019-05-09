@@ -33,7 +33,7 @@ export class HeroesListComponent implements OnInit {
     let localHero; 
 
     page !== 1 ? index = page + 9 : false;
-   //  TODO :  Separete function --
+    //  TODO :  Separete function --
     for (index; index < until; index++) {
       localHero = localStorage.getItem(index.toString())
       if(localHero === null ){
