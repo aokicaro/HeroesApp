@@ -3,6 +3,8 @@ import { switchMap } from 'rxjs/operators';
 
 import {HeroesService} from '../services/heroes.service'
 import { Hero } from '../interfaces/iHero';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { HeroesFavoriteService } from '../services/heroes-favorite.service';
 
 @Component({
   selector: 'app-heroes-list',
@@ -11,19 +13,19 @@ import { Hero } from '../interfaces/iHero';
 })
 export class HeroesListComponent implements OnInit {
 
-  private hero: Hero
   private heroes: Hero[] = [];
-  private countHeroes: number;
+  private heroPage: number = 1
 
   private selectedHero: Hero;
 
   constructor(
-    private heroesService: HeroesService
+    private heroesService: HeroesService,
+    private favoriteService: HeroesFavoriteService
   ) { }
 
 
   ngOnInit() {
-    this.getHeroes(1);
+    this.getHeroes(this.heroPage);
   }
 
   getHeroes(page:number){
@@ -32,27 +34,13 @@ export class HeroesListComponent implements OnInit {
     let until = (page * 10) + 1
     let localHero; 
 
-    page !== 1 ? index = page + 9 : false;
-    //  TODO :  Separete function --
+    page !== 1 ? index = page + (9*(page-1)) : false;
+
+    this.heroes = [];
     for (index; index < until; index++) {
       localHero = localStorage.getItem(index.toString())
       if(localHero === null ){
-        this.heroesService.getHeroById(index).subscribe(
-          (res) => {
-            this.heroes.push(res);
-          },
-          (err) => {
-            console.log(err);
-            // Implement error component
-          },
-          () => {
-            this.heroes.forEach(
-              (hero) => {
-                localStorage.setItem(`${hero.id}`, JSON.stringify(hero));
-              }
-            )
-          }
-        ); 
+        this.getHeroById(index);
       } else {        
         let heroStored:Hero = JSON.parse(localHero)
         this.heroes.push(heroStored);       
@@ -60,8 +48,43 @@ export class HeroesListComponent implements OnInit {
     }
   }
 
+  getHeroById(index:number){
+    this.heroesService.getHeroById(index).subscribe(
+      (res) => {
+        this.heroes.push(res);
+      },
+      (err) => {
+        console.log(err);
+        // Implement error component
+      },
+      () => {
+        this.heroes.forEach(
+          (hero) => {
+            localStorage.setItem(`${hero.id}`, JSON.stringify(hero));
+          }
+        )
+      }
+    ); 
+  }
+
+  setFavoriteHeroes(heroName:string, hero:Hero){
+    this.favoriteService.setFavoriteHeroes(heroName,hero);
+  }
+
   seeDetail(hero: Hero){
     this.selectedHero !== hero ? this.selectedHero = hero : this.selectedHero = null 
   }
 
+  heroPagination(pag: string){
+
+      if(pag == 'more'){
+        this.heroPage +=1
+      } else if(this.heroPage > 1) {
+        this.heroPage -=1;
+      }
+
+    if(this.heroPage > 0){
+      this.getHeroes(this.heroPage)
+    }
+  }
 }
