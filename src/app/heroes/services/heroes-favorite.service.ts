@@ -13,19 +13,28 @@ export class HeroesFavoriteService {
     private cookie: CookieService
   ) { }
 
-    getFavoriteHeroes(){
-        let favorites = Object.values(this.cookie.getAll())
+    getFavoriteHeroes() {
+        const favorites = Object.values(this.cookie.getAll());
+        this.favoriteHeroes = [];
         favorites.forEach(
             (res) => {
-                let hero = JSON.parse(res.toString());                
-                this.favoriteHeroes.push(hero);            
+                const hero = JSON.parse(res.toString());
+                this.favoriteHeroes.push(hero);
             }
-        )
-        
+        );
     }
 
-    setFavoriteHeroes(heroName:string, hero: Hero){
+    setFavoriteHeroes(heroName: string, hero: Hero) {
         this.cookie.set(heroName, JSON.stringify(hero));
+        alert('This hero was favored!');
+        // implement msg
+    }
+
+    deleteFavoriteHero(heroName: string) {
+        this.cookie.delete(heroName);
+        this.favoriteHeroes = this.favoriteHeroes.filter(
+            (heroF) => heroF.name !== heroName
+        )
     }
 
 }

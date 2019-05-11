@@ -1,4 +1,6 @@
-  <ul>
-    <li>{{hero.name}}</li>
-    <li>{{hero.work.occupation}}</li>
-  </ul>
+  <div [ngClass]="global.role" class="hero-details">
+    <img src="{{hero.image.url}}" alt="{{hero.name}}" class="hero-details-img">
+    <div class="hero-details-main">
+      <span class="hero-details-main-ocup">{{hero.work.occupation}}</span>
+    </div>
+  </div>

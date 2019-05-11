@@ -1,0 +1,18 @@
+.batman,
+.spider{
+    .btn{
+        position: absolute;
+        top: 10px;
+        left: 17%;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .batman,
+    .spider{
+        .btn{
+            top: 10px;
+            left: 33%;
+        }
+    }
+}

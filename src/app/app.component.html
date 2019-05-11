@@ -1,4 +1,7 @@
 
 <app-header></app-header>
-<router-outlet></router-outlet>
+<div #theme id="theme" class="batman">
+    <button class="btn btn-warning" (click)="tradeTheme(event)">Trade theme</button>
+    <router-outlet #theme id="theme" class="batman"></router-outlet>
+</div>
 <app-footer></app-footer>

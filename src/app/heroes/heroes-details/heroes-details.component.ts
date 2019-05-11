@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+
+import { Globals } from '../../service/global.service';
+
 import { Hero } from '../interfaces/iHero';
 
 @Component({
@@ -8,7 +11,9 @@ import { Hero } from '../interfaces/iHero';
 })
 export class HeroesDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private global: Globals
+  ) { }
   @Input() hero: Hero;
   ngOnInit() { }
 }

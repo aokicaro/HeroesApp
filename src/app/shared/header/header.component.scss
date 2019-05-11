@@ -1,0 +1,23 @@
+@import  '../../../styles.scss';
+header{
+    margin-bottom: 20px;
+    &.batman{
+        background-color: $batmanColor;
+        a{
+            color: $batmanFontColor;
+        }
+    }
+    &.spider{
+        background-color: $spiderColor;
+        a{
+            color: $spiderFontColor;
+        }
+
+    }
+
+    @media screen and (max-width: 800px){
+        .heroes-images{
+            display: none;
+        }
+    }
+}

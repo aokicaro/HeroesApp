@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeroesModule } from './heroes/heroes.module';
 import { SharedModule } from './shared/shared.module';
+import { Globals } from './service/global.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,9 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    Globals
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

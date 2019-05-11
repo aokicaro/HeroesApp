@@ -1,0 +1,33 @@
+@import "../heroes-list/heroes-list.component.scss";
+
+.hero-details{
+    align-items: center;
+    display: flex;
+    &-img{
+        width: 15%;
+        height: 100%;
+    }
+    &-main{
+        padding-left: 10%;
+    }
+}
+
+.batman{
+        background: $batmanColor;
+        .hero-details-main{
+            &-ocup{
+
+                color: $batmanFontColor
+            }
+        }
+}
+
+.spider{
+        background: $spiderColor;
+        .hero-details-main{
+
+            &-ocup{
+            color: $spiderFontColor
+            }
+        }
+}

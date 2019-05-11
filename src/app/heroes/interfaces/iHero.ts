@@ -15,4 +15,5 @@ export interface Hero{
     powerstats: PowerStats[]
     slug: string
     work: Work[]
+    response:string
 }

@@ -1,23 +1,23 @@
-<table class="table">
-    <thead class="thead-dark">
-      <!-- <th scope="col">ID</th> -->
-      <th scope="col">Name</th>
-      <th scope="col">Details</th>
-      <!-- <th scope="col">Favorite</th> -->
-    </thead>
-    <tbody>
-        <tr scope="row" *ngFor="let hero of favoriteHeroes">
-            <!-- <td>{{hero.id}}</td> -->
-            <td>{{hero.name}}</td>
-            <td>
-                <span (click)="seeDetail(hero)">Detail</span>
-                <div class="details" *ngIf="selectedHero && selectedHero === hero">
-                    <app-heroes-details  [hero]="selectedHero"></app-heroes-details>
-                </div>               
-            </td>
-            <!-- <td>
-                <i class="fas fa-star"(click)="setFavoriteHeroes(hero.name, hero)"></i>
-            </td> -->
-        </tr>
-    </tbody>
-</table>
+<div [ngClass]="global.role" class="heroes-list">
+    <table class="table">
+        <thead>
+          <th scope="col">Name</th>
+          <th scope="col">Details</th>
+          <th scope="col"></th>
+        </thead>
+        <tbody>
+            <tr scope="row" *ngFor="let hero of favoriteHeroes">
+                <td>{{hero.name}}</td>
+                <td>
+                    <span (click)="seeDetail(hero)">Detail</span>
+                    <div class="details" *ngIf="selectedHero && selectedHero === hero">
+                        <app-heroes-details  [hero]="selectedHero"></app-heroes-details>
+                    </div>               
+                </td>
+                <td>
+                    <i class="fas fa-trash-alt" (click)="deleteFavoriteHero(hero.name)"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

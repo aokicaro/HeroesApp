@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HeroesFavoriteService } from '../services/heroes-favorite.service';
+import { Globals } from '../../service/global.service';
+
 import { Hero } from '../interfaces/iHero';
 
 @Component({
@@ -10,21 +12,31 @@ import { Hero } from '../interfaces/iHero';
 })
 export class HeroesFavoriteComponent implements OnInit {
 
-  private favoriteHeroes: Hero[]
+  private favoriteHeroes: Hero[];
 
 
   constructor(
-    private heroFavoriteService: HeroesFavoriteService
-  ) { }
+    private heroFavoriteService: HeroesFavoriteService,
+    private global: Globals
+  ) {
+   }
 
   ngOnInit() {
     this.getFavoriteHeroes();
   }
-  
-  getFavoriteHeroes(){
+
+  getFavoriteHeroes() {
     this.heroFavoriteService.getFavoriteHeroes();
     this.favoriteHeroes = this.heroFavoriteService.favoriteHeroes;
   }
+
+  deleteFavoriteHero(heroName: string) {
+    this.heroFavoriteService.deleteFavoriteHero(heroName);
+    this.getFavoriteHeroes();
+    alert('Hero deleted!');
+    // implement msg component
+  }
+
 
 
 
